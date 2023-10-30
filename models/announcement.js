@@ -11,7 +11,6 @@ const AnnouncementSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true,
   },
   category: {
     type: String,

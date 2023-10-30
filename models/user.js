@@ -17,35 +17,36 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  father_name: {
+  password: {
     type: String,
     required: true,
   },
+  father_name: {
+    type: String,
+  },
   mother_name: {
     type: String,
-    required: true,
   },
   address: {
     address_line: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
-      required: true,
     },
     state: {
       type: String,
-      required: true,
     },
     pincode: {
       type: Number,
-      required: true,
     },
+  },
+  isAdmin:{
+    type:Boolean,
+    required:false,
   },
   dept_id: {
     type: String,
-    required: true,
   },
 });
 
