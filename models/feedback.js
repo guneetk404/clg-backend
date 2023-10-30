@@ -9,6 +9,15 @@ const FeedbackSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  user_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  feedback_parameter_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'FeedbackParameter'
+
+  }
 });
 
 const Feedback = mongoose.model("Feedback", FeedbackSchema);

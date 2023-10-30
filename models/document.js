@@ -10,6 +10,14 @@ const DocumentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  attachment_url: {
+    type: String,
+    required: true,
+  },
+  user_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
 });
 
 const Document = mongoose.model("Document", DocumentSchema);

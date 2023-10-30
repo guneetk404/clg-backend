@@ -36,7 +36,7 @@ const addUser = async (req, res) => {
   try {
     const email = req.body.email;
     const user = await getUserByEmail(email);
-    if (req.user.isAdmin) {
+    if ( req.user.isAdmin) {
       if (!user) {
         const newUser = await createUser(req.body);
         return res.json(200, {
@@ -157,8 +157,9 @@ const loginUser = async (req, res) => {
     const jwtKey = process.env.JWT_SECRET;
     const email = user.toObject().email;
     const isAdmin = user.toObject().isAdmin;
+    const _id = user.toObject()._id;
 
-    const token = jwt.sign({ email, isAdmin }, jwtKey, { expiresIn: "2d" });
+    const token = jwt.sign({ email, isAdmin, _id }, jwtKey, { expiresIn: "2d" });
 
     res.status(200).send({
       user: user,

@@ -46,7 +46,8 @@ const UserSchema = new mongoose.Schema({
     required:false,
   },
   dept_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Department'
   },
 });
 

@@ -10,6 +10,15 @@ const EnquiryCommentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  user_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  enquiry_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Enquiry'
+  }
+  
 });
 
 const EnquiryComment = mongoose.model("EnquiryComment", EnquiryCommentSchema);

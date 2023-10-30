@@ -11,11 +11,13 @@ const EnquirySchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true,
   },
   status: {
     type: String,
-    required: true,
+  },
+  user_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
   },
 });
 
