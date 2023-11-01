@@ -12,13 +12,13 @@ const createEnquiryComment = async (data) => {
 };
 
 const findEnquiryByUser = async (user_id) => {
-  const enquires = await Enquiry.find({user_id});
+  const enquires = await Enquiry.find({ user_id });
   return enquires;
 };
 const findEnquiryByEnquiryId = async (enquiry_id) => {
-    const enquires = await Enquiry.findById(enquiry_id);
-    return enquires;
-  };
+  const enquires = await Enquiry.findById(enquiry_id);
+  return enquires;
+};
 
 const getEnquiryAdmin = async () => {
   const enquires = await Enquiry.find({});
@@ -26,8 +26,12 @@ const getEnquiryAdmin = async () => {
 };
 
 const getEnquiryCommentByEnquiryId = async (enquiry_id) => {
-  const comments = await EnquiryComment.find({enquiry_id});
+  const comments = await EnquiryComment.find({ enquiry_id });
   return comments;
+};
+const updateEnquiryStatus = async (id, data) => {
+  const update = await Enquiry.findByIdAndUpdate(id, data);
+  return update;
 };
 
 getEnquiryCommentByEnquiryId;
@@ -37,5 +41,6 @@ module.exports = {
   findEnquiryByUser,
   getEnquiryAdmin,
   getEnquiryCommentByEnquiryId,
-  findEnquiryByEnquiryId
+  findEnquiryByEnquiryId,
+  updateEnquiryStatus,
 };

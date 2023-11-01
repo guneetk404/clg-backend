@@ -5,6 +5,7 @@ const {
   getEnquiryAdmin,
   getEnquiryCommentByEnquiryId,
   findEnquiryByEnquiryId,
+  updateEnquiryStatus,
 } = require("../services/enquiry");
 
 const addEnquiry = async (req, res) => {
@@ -48,7 +49,8 @@ const addComment = async (req, res) => {
     if (isAdmin) {
       const enquiry_id = req.params.id;
       const user_id = req.user._id;
-      const data = { ...req.body, enquiry_id, user_id };
+      const date = new Date();
+      const data = { ...req.body, enquiry_id, user_id, date };
       const comment = await createEnquiryComment(data);
       return res.status(200).send({
         data: comment,
@@ -100,8 +102,8 @@ const getEnquiryComment = async (req, res) => {
 
     const enquiry = await findEnquiryByEnquiryId(enquiry_id);
     const user = req.user._id;
-   const isOwner =  user == enquiry?.user_id;
-   
+    const isOwner = user == enquiry?.user_id;
+
     if (isOwner || isAdmin) {
       // i want to authenticate that user sees his enquiry comments only ---- this is not secured yet
       // console.log(enquiry_id);
@@ -126,10 +128,40 @@ const getEnquiryComment = async (req, res) => {
     });
   }
 };
+
+const updateStatus = async (req, res) => {
+  try {
+    const isAdmin = req.user.isAdmin;
+    if(isAdmin){
+
+      const enquiry_id = req.params.id;
+      const data = {...req.body}
+      const status = await updateEnquiryStatus(enquiry_id,data)
+      return res.status(200).send({
+        data:status,
+        message:"status changed Successfully",
+        success:true
+      })
+    }
+    else {
+      return res.status(401).send({
+        message: "Unauthorized Access",
+        success: false,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
 module.exports = {
   addEnquiry,
   addComment,
   getEnquiryUser,
   getAllEnquiries,
   getEnquiryComment,
+  updateStatus,
 };

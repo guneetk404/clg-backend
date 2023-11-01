@@ -26,7 +26,9 @@ const createAnnouncement = async (req, res) => {
   try {
     const isAdmin = req.user.isAdmin;
     if (isAdmin) {
-      const announcement = await addAnnouncement(req.body);
+      const date = new Date();
+      const data = {...req.body,date}
+      const announcement = await addAnnouncement(data);
       return res.status(200).send({
         data: announcement,
         messsage: "new annoucement added Successfully",
