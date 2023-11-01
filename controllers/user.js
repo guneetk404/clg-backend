@@ -135,7 +135,7 @@ const deleteUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const userId = req.body.email;
     const password = req.body.password;
 
@@ -168,7 +168,7 @@ const loginUser = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return res.status(500).end("Internal Server Error");
   }
 };

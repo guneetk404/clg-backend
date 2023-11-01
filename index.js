@@ -3,15 +3,18 @@ require("./db/index");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/user");
 const annoucementRouter = require("./routes/announcement");
-const enquiryRouter = require("./routes/enquiry")
+const enquiryRouter = require("./routes/enquiry");
+const documentRouter = require("./routes/document");
+const feedbackRouter = require("./routes/feedback");
 require("dotenv").config();
-const mongoose = require("mongoose");
 
 const app = express();
 app.use(bodyParser.json());
 app.use("/user", userRouter);
 app.use("/announcement", annoucementRouter);
-app.use("/enquiry",enquiryRouter);
+app.use("/enquiry", enquiryRouter);
+app.use("/document", documentRouter);
+app.use("/feedback", feedbackRouter);
 
 const port = 3000;
 app.listen(port, () => {

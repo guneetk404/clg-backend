@@ -7,7 +7,7 @@ const {
 
 const getAnnouncement = async (req, res) => {
   try {
-    console.log("inside");
+    // console.log("inside");
     const announcements = await getAllAnnouncement();
     return res.status(200).send({
       data: announcements,

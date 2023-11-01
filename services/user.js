@@ -7,7 +7,7 @@ const getUserByEmail = async (email) => {
 };
 
 const createUser = async (data) => {
-  console.log(data);
+  // console.log(data);
   const password = "abc";
   const hashedPassword = bcrypt.hashSync(password, 8);
   const user = await User.create({ ...data, password: hashedPassword });

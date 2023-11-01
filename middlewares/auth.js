@@ -5,9 +5,9 @@ const userAuth = async (req, res, next) => {
     const [, token] = req.headers?.authorization.split(" ");
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
-//     console.log(user);
+//     // console.log(user);
     req.user = user;
-    console.log(req.user.email);
+    // console.log(req.user.email);
     next();
   } catch (error) {
     console.log(error);
