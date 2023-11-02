@@ -7,6 +7,7 @@ const annoucementRouter = require("./routes/announcement");
 const enquiryRouter = require("./routes/enquiry");
 const documentRouter = require("./routes/document");
 const feedbackRouter = require("./routes/feedback");
+const departmentRouter = require("./routes/department");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use("/announcement", annoucementRouter);
 app.use("/enquiry", enquiryRouter);
 app.use("/document", documentRouter);
 app.use("/feedback", feedbackRouter);
+app.use("/department",departmentRouter);
 
 const port = 3000;
 app.listen(port, () => {
