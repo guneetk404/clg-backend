@@ -21,6 +21,9 @@ const FeedbackSchema = new mongoose.Schema({
       },
     },
   ],
+  suggestion:{
+    type:String,
+  }
 });
 
 const Feedback = mongoose.model("Feedback", FeedbackSchema);

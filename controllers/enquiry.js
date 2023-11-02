@@ -6,6 +6,7 @@ const {
   getEnquiryCommentByEnquiryId,
   findEnquiryByEnquiryId,
   updateEnquiryStatus,
+  updateCommentId,
 } = require("../services/enquiry");
 
 const addEnquiry = async (req, res) => {
@@ -36,6 +37,7 @@ const getEnquiryUser = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       message: "Internal Server Error",
       success: false,
@@ -52,6 +54,8 @@ const addComment = async (req, res) => {
       const date = new Date();
       const data = { ...req.body, enquiry_id, user_id, date };
       const comment = await createEnquiryComment(data);
+      const comment_id = comment._id;
+      await updateCommentId(enquiry_id, comment_id);
       return res.status(200).send({
         data: comment,
         message: "comment created on enquiry",
@@ -132,18 +136,16 @@ const getEnquiryComment = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const isAdmin = req.user.isAdmin;
-    if(isAdmin){
-
+    if (isAdmin) {
       const enquiry_id = req.params.id;
-      const data = {...req.body}
-      const status = await updateEnquiryStatus(enquiry_id,data)
+      const data = { ...req.body };
+      const status = await updateEnquiryStatus(enquiry_id, data);
       return res.status(200).send({
-        data:status,
-        message:"status changed Successfully",
-        success:true
-      })
-    }
-    else {
+        data: status,
+        message: "status changed Successfully",
+        success: true,
+      });
+    } else {
       return res.status(401).send({
         message: "Unauthorized Access",
         success: false,

@@ -1,4 +1,4 @@
-const { createFeedbackUser, allFeedbacksAdmin } = require("../services/feedback");
+const { createFeedbackUser, allFeedbacksAdmin, getFeedbackParameter } = require("../services/feedback");
 
 const createFeedback = async (req, res) => {
   try {
@@ -54,8 +54,28 @@ const getFeedback = async (req, res) => {
   }
 };
 
+const getFeedbackParams = async (req, res) => {
+  try {
+  //   const user_id = req.user._id;
+  //   const data = { ...req.body, user_id };
+    const feedbackParams = await getFeedbackParameter();
+    return res.status(200).send({
+      data: feedbackParams,
+      message: "feedback saved successfully",
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+
 module.exports = {
   createFeedback,
   deleteFeedback,
   getFeedback,
+  getFeedbackParams
 };

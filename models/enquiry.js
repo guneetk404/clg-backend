@@ -15,10 +15,18 @@ const EnquirySchema = new mongoose.Schema({
   status: {
     type: String,
   },
-  user_id:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'User'
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
+  comments: [
+    {
+      comment_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"EnquiryComment"
+      },
+    },
+  ],
 });
 
 const Enquiry = mongoose.model("Enquiry", EnquirySchema);

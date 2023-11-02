@@ -15,5 +15,9 @@ const allFeedbacksAdmin = async () => {
   const feedbacks = await Feedback.find({});
   return feedbacks;
 };
+const getFeedbackParameter = async () =>{
+  const feedbackParams = await FeedbackParameter.find({});
+  return feedbackParams;
+}
 
-module.exports = { createFeedbackUser, getFeedbackUser, allFeedbacksAdmin };
+module.exports = { createFeedbackUser, getFeedbackUser, allFeedbacksAdmin ,getFeedbackParameter};

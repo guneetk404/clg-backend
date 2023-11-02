@@ -39,13 +39,13 @@ const addUser = async (req, res) => {
     if ( req.user.isAdmin) {
       if (!user) {
         const newUser = await createUser(req.body);
-        return res.json(200, {
+        return res.status(200).send({
           data: newUser,
           message: "User created successfully",
           success: true,
         });
       } else {
-        return res.json(202, {
+        return res.send(202).send({
           message: "User Already Present!",
           success: false,
         });
@@ -79,9 +79,9 @@ const updateUser = async (req, res) => {
     }
     if (req.user.email === email || isAdmin) {
       const updatedUserData = req.body;
-      const updatedUser = updateByEmail(email, updatedUserData);
+      const updatedUser = await updateByEmail(email, updatedUserData);
       return res.status(200).send({
-        data: updatedUserData,
+        data: updatedUser,
         message: "User updated successfully ",
         success: true,
       });

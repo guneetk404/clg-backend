@@ -15,7 +15,7 @@ const createUser = async (data) => {
 };
 
 const updateByEmail = async (email, data) => {
-  const user = await User.findOneAndUpdate({ email }, data);
+  const user = await User.findOneAndUpdate( {email} , data);
   return user;
 };
 
