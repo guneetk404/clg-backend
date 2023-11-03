@@ -12,6 +12,8 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    index: true,
+    unique: true,
   },
   phone: {
     type: String,
@@ -23,31 +25,37 @@ const UserSchema = new mongoose.Schema({
   },
   father_name: {
     type: String,
+    default: "",
   },
   mother_name: {
     type: String,
+    default: "",
   },
   address: {
     address_line: {
       type: String,
+      default: "",
     },
     city: {
       type: String,
+      default: "",
     },
     state: {
       type: String,
+      default: "",
     },
     pincode: {
       type: Number,
+      default: null,
     },
   },
-  isAdmin:{
-    type:Boolean,
-    required:false,
+  isAdmin: {
+    type: Boolean,
+    required: false,
   },
   dept_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:'Department'
+    ref: "Department",
   },
 });
 

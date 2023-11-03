@@ -15,8 +15,8 @@ const deleteDepartmentById = async (id) => {
   return department;
 };
 
-const updateDepartmentById = async () => {
-  const department = await Department.findByIdAndDelete(id);
+const updateDepartmentById = async (id,data) => {
+  const department = await Department.findByIdAndUpdate(id,data);
   return department;
 };
 

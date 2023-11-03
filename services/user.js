@@ -15,7 +15,7 @@ const createUser = async (data) => {
 };
 
 const updateByEmail = async (email, data) => {
-  const user = await User.findOneAndUpdate( {email} , data);
+  const user = await User.findOneAndUpdate({ email }, data);
   return user;
 };
 
@@ -24,4 +24,19 @@ const deleteByEmail = async (email) => {
   return user;
 };
 
-module.exports = { getUserByEmail, createUser, updateByEmail, deleteByEmail };
+const bulkRegisterHelper = async (data) => {
+  const password = "abc";
+  const hashedPassword = bcrypt.hashSync(password, 8);
+
+  const userData = data.map((user) => ({ ...user, password }));
+  const users = await User.insertMany(userData);
+  return users;
+};
+
+module.exports = {
+  getUserByEmail,
+  bulkRegisterHelper,
+  createUser,
+  updateByEmail,
+  deleteByEmail,
+};

@@ -32,7 +32,7 @@ const getDepartment = async (req, res) => {
   try {
     const isAdmin = req.user.isAdmin;
     if (isAdmin) {
-      const departments = await getAllDepartment;
+      const departments = await getAllDepartment();
 
       return res.status(200).send({
         data: departments,
@@ -56,9 +56,11 @@ const getDepartment = async (req, res) => {
 const updateDepartment = async (req, res) => {
   try {
     const isAdmin = req.user.isAdmin;
-    const _id = req.params.id;
+    const id = req.params.id;
+    const data = req.body;
+    // console.log(_id)
     if (isAdmin) {
-      const department = await updateDepartmentById(_id);
+      const department = await updateDepartmentById(id,data);
       return res.status(200).send({
         data: department,
         message: "Department updated Successfully",
@@ -71,6 +73,7 @@ const updateDepartment = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       message: "Internal Server Error",
       success: false,

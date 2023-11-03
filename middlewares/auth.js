@@ -10,7 +10,7 @@ const userAuth = async (req, res, next) => {
     // console.log(req.user.email);
     next();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(401).send({
       message: "auth failed",
       success: false,

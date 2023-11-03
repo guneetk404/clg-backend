@@ -3,6 +3,7 @@ const {
   createUser,
   updateByEmail,
   deleteByEmail,
+  bulkRegisterHelper,
 } = require("../services/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -25,8 +26,8 @@ const getUser = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    return res.status(400, {
-      message: err,
+    return res.status(500).send({
+      message: "Internal Server Error",
       success: false,
     });
   }
@@ -36,16 +37,18 @@ const addUser = async (req, res) => {
   try {
     const email = req.body.email;
     const user = await getUserByEmail(email);
-    if ( req.user.isAdmin) {
+
+    if (req.user.isAdmin) {
       if (!user) {
-        const newUser = await createUser(req.body);
+        const data = req.body;
+        const newUser = await createUser(data);
         return res.status(200).send({
           data: newUser,
           message: "User created successfully",
           success: true,
         });
       } else {
-        return res.send(202).send({
+        return res.status(403).send({
           message: "User Already Present!",
           success: false,
         });
@@ -57,9 +60,8 @@ const addUser = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
-    return res.status(400, {
-      message: err,
+    return res.status(500).send({
+      message: "Internal Server Error",
       success: false,
     });
   }
@@ -92,9 +94,8 @@ const updateUser = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
-    return res.status(400, {
-      message: err,
+    return res.status(500).send({
+      message: "Internal Server Error",
       success: false,
     });
   }
@@ -125,9 +126,8 @@ const deleteUser = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
-    return res.status(400, {
-      message: err,
+    return res.status(500).send({
+      message: "Internal Server Error",
       success: false,
     });
   }
@@ -143,7 +143,7 @@ const loginUser = async (req, res) => {
     console.log(user);
     if (!user) {
       return res.status(401).send({
-        message: "Sorry wrong credentials  ",
+        message: "Sorry wrong credentials",
         success: false,
       });
     }
@@ -151,6 +151,7 @@ const loginUser = async (req, res) => {
     if (!checkPassword) {
       return res.status(401).send({
         message: "sorry Wrong Username or Password",
+        success: false,
       });
     }
 
@@ -159,7 +160,9 @@ const loginUser = async (req, res) => {
     const isAdmin = user.toObject().isAdmin;
     const _id = user.toObject()._id;
 
-    const token = jwt.sign({ email, isAdmin, _id }, jwtKey, { expiresIn: "2d" });
+    const token = jwt.sign({ email, isAdmin, _id }, jwtKey, {
+      expiresIn: "2d",
+    });
 
     res.status(200).send({
       user: user,
@@ -168,9 +171,34 @@ const loginUser = async (req, res) => {
       success: true,
     });
   } catch (err) {
-    // console.log(err);
-    return res.status(500).end("Internal Server Error");
+    return res.status(400).send({
+      message: "Internal Server Error",
+      success: false,
+    });
   }
 };
 
-module.exports = { getUser, loginUser, addUser, updateUser, deleteUser };
+const bulkRegistrations = async (req, res) => {
+  try {
+    console.log(req.body);
+    const registers = await bulkRegisterHelper(req.body);
+    res.status(200).send({
+      data: registers,
+      message: "bulk registrations successful",
+      success: true,
+    });
+  } catch (err) {
+    return res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+module.exports = {
+  bulkRegistrations,
+  getUser,
+  loginUser,
+  addUser,
+  updateUser,
+  deleteUser,
+};
